@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swapan Kumar Mondal | Premium Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #000000;
+            --bg-card: rgba(15, 15, 20, 0.8);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --accent-glow: #3b82f6;
+            --accent-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            --accent-purple: #8b5cf6;
+            --accent-purple-gradient: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            
+            /* Status Colors */
+            --status-completed: #10b981;
+            --status-completed-bg: rgba(16, 185, 129, 0.1);
+            --status-progress: #3b82f6;
+            --status-progress-bg: rgba(59, 130, 246, 0.1);
+            --status-pending: #f59e0b;
+            --status-pending-bg: rgba(245, 158, 11, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- ADVANCED ANIMATED BACKGROUND --- */
+        .aurora-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; background: var(--bg-main);
+        }
+
+        .blob {
+            position: absolute; filter: blur(120px); opacity: 0.3; border-radius: 50%;
+            animation: moveBlob 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: rgba(0, 242, 254, 0.3); animation-delay: 0s; }
+        .blob-2 { bottom: -20%; right: -10%; width: 600px; height: 600px; background: rgba(139, 92, 246, 0.2); animation-delay: -5s; }
+
+        @keyframes moveBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10%, 10%) scale(1.1); }
+            100% { transform: translate(-5%, 5%) scale(0.9); }
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1.5rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color); z-index: 1000; transition: all 0.3s ease;
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--text-primary); text-decoration: none; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent-purple); }
+
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: all 0.3s; }
+        .nav-links a:hover { color: var(--text-primary); }
+
+        /* --- GLOBAL LAYOUT --- */
+        section { padding: 120px 10%; max-width: 1400px; margin: 0 auto; }
+        .section-title { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px; }
+        .section-subtitle { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 4rem; max-width: 600px; }
+        .gradient-text { background: var(--accent-purple-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- HERO SECTION --- */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .hero h1 { font-size: 5.5rem; line-height: 1.1; font-weight: 800; letter-spacing: -2.5px; margin-bottom: 1.5rem; }
+        .hero p.tagline { font-size: 1.25rem; color: var(--text-secondary); max-width: 750px; margin-bottom: 3.5rem; line-height: 1.8; font-weight: 400; }
+
+        .tech-stack-marquee { display: flex; flex-wrap: wrap; gap: 1rem; }
+        .tech-pill {
+            padding: 0.7rem 1.4rem; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color);
+            border-radius: 100px; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 10px;
+            transition: all 0.4s; backdrop-filter: blur(10px); color: #d4d4d8;
+        }
+        .tech-pill:hover {
+            border-color: rgba(139, 92, 246, 0.5); background: rgba(139, 92, 246, 0.05); color: #fff;
+            transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 20px rgba(139, 92, 246, 0.1);
+        }
+
+        /* --- SPOTLIGHT CARDS --- */
+        .cards-grid { display: grid; gap: 2rem; }
+        .projects-grid { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); }
+        .about-grid { grid-template-columns: 1fr 1.5fr; }
+
+        .spotlight-card {
+            position: relative; background: var(--bg-card); border-radius: 16px; padding: 2.5rem;
+            border: 1px solid var(--border-color); overflow: hidden; backdrop-filter: blur(20px);
+            transition: transform 0.4s ease, border-color 0.4s ease; display: flex; flex-direction: column;
+        }
+
+        .spotlight-card::before {
+            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit; padding: 2px;
+            background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255, 255, 255, 0.15), transparent 40%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0; transition: opacity 0.4s ease;
+        }
+
+        .spotlight-card:hover { transform: translateY(-3px); }
+        .spotlight-card:hover::before { opacity: 1; }
+        .spotlight-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+        .spotlight-card p { color: var(--text-secondary); font-size: 1rem; margin-bottom: 1.5rem; flex-grow: 1; }
+
+        /* --- FLAGSHIP FEATURED PROJECT SECTION --- */
+        .featured-project-container { padding: 3rem; }
+        .featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        
+        .featured-badges { display: flex; gap: 10px; margin-bottom: 1.5rem; }
+        .f-badge { padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .f-badge.completed { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .f-badge.featured { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.2); }
+        .f-badge.progress { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .f-badge.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); }
+        
+        .featured-title { font-size: 2.4rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #fff; }
+        .featured-desc { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem; line-height: 1.7; }
+        
+        .featured-tech { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 2.5rem; }
+        .f-tech-tag { background: rgba(255, 255, 255, 0.05); color: #e4e4e7; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; align-items: center; gap: 8px; }
+        
+        .featured-highlights { display: flex; justify-content: space-between; margin-bottom: 3rem; }
+        .f-highlight-item h4 { font-size: 1.5rem; font-weight: 800; margin-bottom: 5px; }
+        .f-highlight-item span { color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .featured-actions { display: flex; gap: 1rem; }
+        .btn-primary { background: var(--accent-purple-gradient); color: #fff; padding: 0.9rem 1.8rem; border-radius: 10px; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 8px; transition: transform 0.3s, box-shadow 0.3s; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3); }
+        .btn-secondary { background: rgba(255,255,255,0.05); color: #fff; padding: 0.9rem 1.8rem; border-radius: 10px; text-decoration: none; font-weight: 700; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; transition: all 0.3s; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-3px); }
+        
+        .featured-graphic {
+            width: 100%; height: 100%; min-height: 400px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(0, 242, 254, 0.05) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 20px;
+            display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
+            padding: 0; /* Ensures iframe goes edge to edge */
+        }
+        .graphic-inner { text-align: center; color: rgba(255,255,255,0.7); padding: 2rem; }
+        .graphic-icon { font-size: 6rem; color: #8b5cf6; margin-bottom: 1.5rem; filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.5)); animation: floatRocket 6s ease-in-out infinite; }
+        .graphic-inner span { display: block; font-weight: 600; font-size: 1.2rem; letter-spacing: 1px; color: var(--text-secondary); }
+        
+        @keyframes floatRocket { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(5deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+
+        /* --- GOOGLE SHEETS DYNAMIC GRID --- */
+        .gsheets-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; }
+        .minor-project-card { padding: 2rem; }
+        .minor-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .minor-tech-icons { display: flex; gap: 12px; font-size: 1.5rem; color: var(--accent-purple); }
+        
+        .dynamic-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid transparent; }
+        .dynamic-badge.completed { background: var(--status-completed-bg); color: var(--status-completed); border-color: rgba(16, 185, 129, 0.3); }
+        .dynamic-badge.progress { background: var(--status-progress-bg); color: var(--status-progress); border-color: rgba(59, 130, 246, 0.3); }
+        .dynamic-badge.pending { background: var(--status-pending-bg); color: var(--status-pending); border-color: rgba(245, 158, 11, 0.3); }
+
+        .minor-project-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; line-height: 1.3; }
+        .minor-tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
+        .minor-tag { background: rgba(255, 255, 255, 0.03); color: var(--text-secondary); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; border: 1px solid var(--border-color); }
+
+        .minor-card-footer { display: flex; gap: 15px; margin-top: auto; }
+        .minor-card-footer a { color: var(--text-secondary); font-size: 1.3rem; transition: color 0.3s, transform 0.3s; text-decoration: none; }
+        .minor-card-footer a:hover { color: var(--text-primary); transform: translateY(-2px); }
+
+        /* --- SKILLS --- */
+        .skill-item { margin-bottom: 1.8rem; }
+        .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 1rem; font-weight: 600; }
+        .progress-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.02); }
+        .progress { height: 100%; background: var(--accent-purple-gradient); border-radius: 10px; width: 0; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* --- TIMELINE --- */
+        .timeline { margin-top: 2rem; position: relative; padding-left: 2rem; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #8b5cf6, rgba(139, 92, 246, 0)); }
+        .timeline-item { margin-bottom: 3rem; position: relative; }
+        .timeline-item::after {
+            content: ''; position: absolute; left: -37px; top: 5px; width: 16px; height: 16px; background: var(--bg-main);
+            border: 3px solid #8b5cf6; border-radius: 50%; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+
+        /* --- GITHUB ACTIVITY DASHBOARD --- */
+        .gh-dashboard-grid { display: grid; grid-template-columns: 1fr 2.5fr; gap: 2rem; align-items: start; }
+        .gh-left-col { display: flex; flex-direction: column; gap: 1.5rem; }
+        .gh-profile-header { display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem; }
+        .gh-profile-stats { display: flex; justify-content: space-between; text-align: center; border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
+        .gh-profile-stats h4 { font-size: 1.5rem; color: #00f2fe; margin-bottom: 5px; }
+        .gh-profile-stats span { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; }
+        .gh-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem; }
+        .gh-stat-row:last-child { border-bottom: none; }
+        .gh-stat-value { font-weight: 700; color: #00f2fe; }
+
+        .gh-activity-feed { display: flex; flex-direction: column; gap: 1rem; max-height: 600px; overflow-y: auto; padding-right: 10px; }
+        .gh-activity-feed::-webkit-scrollbar { width: 6px; }
+        .gh-activity-feed::-webkit-scrollbar-track { background: transparent; }
+        .gh-activity-feed::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+        .gh-event-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); padding: 1.2rem; border-radius: 12px; display: flex; align-items: center; gap: 15px; transition: background 0.3s; }
+        .gh-event-card:hover { background: rgba(255, 255, 255, 0.06); }
+        .gh-event-icon { background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); width: 40px; height: 40px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; flex-shrink: 0; }
+        .gh-event-details h4 { font-size: 0.95rem; margin-bottom: 4px; font-weight: 600; }
+        .gh-event-time { font-size: 0.8rem; color: var(--text-secondary); }
+
+        .live-dot { display: inline-block; width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; margin-left: 10px; box-shadow: 0 0 10px #10b981; animation: pulse 2s infinite; }
+        
+        .btn-full-profile { display: block; width: 100%; padding: 1rem; text-align: center; background: var(--accent-purple); color: #fff; text-decoration: none; font-weight: 700; border-radius: 8px; margin-top: 1.5rem; transition: transform 0.3s; }
+        .btn-full-profile:hover { transform: translateY(-3px); }
+
+        /* --- PROJECTS TAGS (GitHub Grid Cards) --- */
+        .project-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; }
+        .project-tag { background: rgba(255, 255, 255, 0.05); color: #e4e4e7; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .project-links a { color: var(--text-primary); text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; }
+        .project-links a:hover { color: var(--accent-purple); transform: translateX(5px); }
+
+        /* --- REDESIGNED FOOTER --- */
+        .footer { border-top: 1px solid var(--border-color); padding: 5rem 10% 2rem; background: #000; position: relative; }
+        .footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 4rem; margin-bottom: 4rem; }
+        
+        .footer-col h2.footer-logo { font-size: 1.8rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 1rem; letter-spacing: -0.5px; }
+        .footer-col p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        .footer-col .contact-info p { display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem; color: #d4d4d8; font-size: 0.9rem; }
+        .footer-col .contact-info i { color: var(--accent-purple); }
+        
+        .footer-col h3 { font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-primary); font-weight: 600; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 1rem; }
+        .footer-col ul li a { color: var(--text-secondary); text-decoration: none; transition: all 0.3s; font-size: 0.95rem; }
+        .footer-col ul li a:hover { color: var(--text-primary); }
+
+        .subscribe-wrapper { display: flex; margin-top: 1rem; }
+        .subscribe-wrapper input { 
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); 
+            padding: 0.8rem 1rem; color: #fff; width: 100%; outline: none; font-family: inherit;
+            border-radius: 8px 0 0 8px; border-right: none;
+        }
+        .subscribe-wrapper button { 
+            background: var(--accent-purple); border: none; padding: 0 1.5rem; color: #fff; 
+            font-weight: 600; cursor: pointer; border-radius: 0 8px 8px 0; transition: opacity 0.3s; 
+        }
+        .subscribe-wrapper button:hover { opacity: 0.9; }
+
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .social-icons { display: flex; gap: 1rem; align-items: center; }
+        .social-icons a.social-btn { 
+            display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; 
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 8px; 
+            color: var(--text-secondary); text-decoration: none; transition: all 0.3s; font-size: 1.1rem; 
+        }
+        .social-icons a.social-btn:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+        
+        .scroll-top-btn {
+            display: flex; align-items: center; justify-content: center; width: 45px; height: 45px;
+            background: var(--accent-purple-gradient); color: #fff; border-radius: 50%;
+            text-decoration: none; font-size: 1.2rem; transition: transform 0.3s; box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+            margin-left: 10px;
+        }
+        .scroll-top-btn:hover { transform: translateY(-3px); }
+
+        /* --- SCROLL REVEAL --- */
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 4rem; }
+            .about-grid, .footer-content, .featured-grid { grid-template-columns: 1fr; }
+            .gh-dashboard-grid { grid-template-columns: 1fr; }
+            .featured-graphic { min-height: 250px; }
+            .gsheets-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .section-title { font-size: 2.5rem; }
+            .footer-bottom { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .featured-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="aurora-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <nav>
+        <a href="#" class="logo">Swapan<span>.</span></a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#featured">Featured</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1 class="reveal" style="transition-delay: 0.1s;">Hi, I'm <br><span class="gradient-text">Swapan Mondal</span></h1>
+        <h2 class="reveal" style="font-size: 1.8rem; font-weight: 600; color: #e4e4e7; margin-bottom: 1.5rem; transition-delay: 0.2s;">Full-Stack Web Developer & AI/ML Enthusiast.</h2>
+        <p class="tagline reveal" style="transition-delay: 0.3s;">I architect scalable cloud infrastructures, design highly interactive user interfaces, and integrate advanced AI models to solve complex, real-world problems.</p>
+        
+        <div class="tech-stack-marquee reveal" style="transition-delay: 0.4s;">
+            <div class="tech-pill"><i class="fab fa-html5"></i> HTML/CSS/JS</div>
+            <div class="tech-pill"><i class="fab fa-node-js"></i> Node.js</div>
+            <div class="tech-pill"><i class="fab fa-python"></i> Python</div>
+            <div class="tech-pill"><i class="fas fa-brain"></i> Generative AI</div>
+            <div class="tech-pill"><i class="fas fa-database"></i> Vector DBs</div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title reveal">About Me</h2>
+        <p class="section-subtitle reveal">The journey and the person behind the code.</p>
+
+        <div class="cards-grid about-grid">
+            <div class="spotlight-card reveal">
+                <img src="https://github.com/Swapankumar2002.png" alt="Profile" style="border-radius: 50%; margin-bottom: 1.5rem; border: 2px solid rgba(139,92,246,0.3); width: 120px; height: 120px; object-fit: cover;">
+                <h3>Swapan Kumar Mondal</h3>
+                <p style="color: var(--accent-purple); font-weight: 600; margin-bottom: 2rem;">Postgraduate Software Engineer</p>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <span style="color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Location</span>
+                    <p style="color: #fff; font-weight: 500;">West Bengal, India</p>
+                </div>
+                <div>
+                    <span style="color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Status</span>
+                    <p style="color: #10b981; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #10b981;"></span>
+                        Open to Work
+                    </p>
+                </div>
+            </div>
+
+            <div class="spotlight-card reveal" style="transition-delay: 0.2s;">
+                <h3>Educational Journey</h3>
+                <p>Building a strong foundation in computer science and advanced machine learning.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span style="color: var(--accent-purple); font-weight: 700; font-size: 0.9rem;">Present</span>
+                        <h4 style="font-size: 1.2rem; color: #fff; margin: 0.3rem 0;">Master of Computer Applications (MCA)</h4>
+                        <p style="margin: 0;">Artificial Intelligence & Machine Learning at Chandigarh University</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <span style="color: var(--text-secondary); font-weight: 700; font-size: 0.9rem;">Completed</span>
+                        <h4 style="font-size: 1.2rem; color: #fff; margin: 0.3rem 0;">Bachelor of Computer Applications (BCA)</h4>
+                        <p style="margin: 0;">Sarala Birla University</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span style="color: var(--text-secondary); font-weight: 700; font-size: 0.9rem;">Completed</span>
+                        <h4 style="font-size: 1.2rem; color: #fff; margin: 0.3rem 0;">Higher Secondary (12th) & Secondary (10th)</h4>
+                        <p style="margin: 0;">General Studies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured">
+        <h2 class="section-title reveal" style="text-align: center; color: var(--accent-purple);">Featured Projects</h2>
+        <p class="section-subtitle reveal" style="text-align: center; margin: 0 auto 4rem auto;">Highlighting my top end-to-end robust architecture builds.</p>
+
+        <div class="spotlight-card reveal featured-project-container">
+            <div class="featured-grid">
+                <div>
+                    <div class="featured-badges">
+                        <span class="f-badge completed" id="featured-badge-status">Completed</span>
+                        <span class="f-badge featured">Featured</span>
+                    </div>
+                    
+                    <h3 class="featured-title" id="featured-title"></h3>
+                    <p class="featured-desc" id="featured-desc">Designed and implemented a comprehensive ecommerce platform for dairy products. Integrated robust databases, secure checkout flows, and a modern frontend interface for seamless user experiences.</p>
+                    
+                    <div class="featured-tech" id="featured-tech">
+                        <span class="f-tech-tag"><i class="fab fa-node-js" style="color: #10b981;"></i> Node.js</span>
+                        <span class="f-tech-tag"><i class="fas fa-database" style="color: #3b82f6;"></i> MongoDB</span>
+                        <span class="f-tech-tag"><i class="fab fa-react" style="color: #00f2fe;"></i> UI/UX</span>
+                        <span class="f-tech-tag"><i class="fas fa-server" style="color: #8b5cf6;"></i> Express</span>
+                    </div>
+
+                    <div class="featured-highlights" id="featured-highlights">
+                        <div class="f-highlight-item">
+                            <h4 style="color: #3b82f6;">Modular</h4>
+                            <span>Full-Stack</span>
+                        </div>
+                        <div class="f-highlight-item">
+                            <h4 style="color: #8b5cf6;">Scalable</h4>
+                            <span>Database</span>
+                        </div>
+                        <div class="f-highlight-item">
+                            <h4 style="color: #10b981;">Secured</h4>
+                            <span>Auth Flow</span>
+                        </div>
+                    </div>
+
+                    <div class="featured-actions">
+                        <a href="https://github.com/Swapankumar2002" target="_blank" class="btn-primary" id="featured-btn-github"><i class="fab fa-github"></i> View Code</a>
+                        <a href="#" target="_blank" class="btn-secondary" id="featured-btn-live"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="featured-graphic" id="featured-graphic-container">
+                    <div class="graphic-inner">
+                        <i class="fas fa-rocket graphic-icon"></i>
+                        <span>Project Architecture</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="other-projects" style="padding-top: 0;">
+        <h2 class="section-title reveal">More Work</h2>
+        <p class="section-subtitle reveal">Live project feed pulled dynamically from Google Sheets.</p>
+        
+        <div class="gsheets-grid" id="gsheets-grid-container">
+            <p id="gsheet-loading-text" style="color: var(--text-secondary);">Connecting to database...</p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title reveal">Technical Arsenal</h2>
+        <p class="section-subtitle reveal">Expertise across the modern development stack.</p>
+
+        <div class="cards-grid projects-grid">
+            <div class="spotlight-card reveal">
+                <h3 style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">Frontend & UI</h3>
+                <div class="skill-item">
+                    <div class="skill-header"><span>HTML/CSS/JS</span> <span>95%</span></div>
+                    <div class="progress-bar"><div class="progress" data-width="95%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header"><span>Modern UI (Glassmorphism)</span> <span>90%</span></div>
+                    <div class="progress-bar"><div class="progress" data-width="90%"></div></div>
+                </div>
+            </div>
+
+            <div class="spotlight-card reveal" style="transition-delay: 0.1s;">
+                <h3 style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">Backend & API</h3>
+                <div class="skill-item">
+                    <div class="skill-header"><span>Node.js / Express</span> <span>85%</span></div>
+                    <div class="progress-bar"><div class="progress" data-width="85%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header"><span>Python (Flask/FastAPI)</span> <span>80%</span></div>
+                    <div class="progress-bar"><div class="progress" data-width="80%"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="github-activity">
+        <h2 class="section-title reveal" style="text-align: center; color: var(--accent-purple);">GitHub Activity</h2>
+        <p class="section-subtitle reveal" style="text-align: center; margin: 0 auto 4rem auto;">Real-time contributions and analytics directly from GitHub.</p>
+
+        <div class="gh-dashboard-grid reveal">
+            <div class="gh-left-col">
+                <div class="spotlight-card" style="padding: 1.5rem;">
+                    <div class="gh-profile-header">
+                        <i class="fab fa-github" style="font-size: 2.5rem; color: #fff;"></i>
+                        <div>
+                            <h3 style="margin-bottom: 0; font-size: 1.2rem;">@Swapankumar2002</h3>
+                            <p style="margin-bottom: 0; font-size: 0.85rem; color: var(--text-secondary);">GitHub Profile</p>
+                        </div>
+                    </div>
+                    <div class="gh-profile-stats">
+                        <div><h4 id="gh-repos-count" style="color:#00f2fe;">0</h4><span>Repos</span></div>
+                        <div><h4 id="gh-followers-count" style="color:#00f2fe;">0</h4><span>Followers</span></div>
+                        <div><h4 id="gh-following-count" style="color:#00f2fe;">0</h4><span>Following</span></div>
+                    </div>
+                </div>
+
+                <div class="spotlight-card" style="padding: 1.5rem;">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Contributions</h3>
+                    <img src="https://ghchart.rshah.org/00f2fe/Swapankumar2002" alt="GitHub Contributions Chart" style="width: 100%; filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.1));">
+                </div>
+
+                <div class="spotlight-card" style="padding: 1.5rem;">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Stats Overview</h3>
+                    <div class="gh-stat-row">
+                        <span>Total Stars</span>
+                        <span class="gh-stat-value" id="gh-total-stars">0</span>
+                    </div>
+                    <div class="gh-stat-row">
+                        <span>Total Forks</span>
+                        <span class="gh-stat-value" id="gh-total-forks">0</span>
+                    </div>
+                    <div class="gh-stat-row">
+                        <span>Public Gists</span>
+                        <span class="gh-stat-value" id="gh-total-gists">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spotlight-card" style="padding: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
+                    <h3 style="margin: 0; font-size: 1.5rem;">Recent Activity</h3>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center;">Live <span class="live-dot"></span></span>
+                </div>
+
+                <div class="gh-activity-feed" id="gh-activity-feed">
+                    <p style="color: var(--text-secondary);">Syncing live events from GitHub API...</p>
+                </div>
+
+                <a href="https://github.com/Swapankumar2002" target="_blank" class="btn-full-profile">
+                    <i class="fab fa-github"></i> View Full Profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title reveal">GitHub Repositories</h2>
+        <p class="section-subtitle reveal">Live pull of all my original projects directly from GitHub.</p>
+
+        <div class="cards-grid projects-grid" id="github-projects-grid">
+            <p id="loading-text" style="color: var(--text-secondary);">Syncing repositories...</p>
+        </div>
+    </section>
+
+    <footer id="contact" class="footer reveal">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h2 class="footer-logo">Swapan Kumar Mondal</h2>
+                <p>Full-Stack Web Developer & AI/ML Enthusiast passionate about building scalable cloud infrastructure and automating everything.</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> West Bengal, India</p>
+                    <p><i class="fas fa-envelope"></i> swapankumarmondal@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#featured">Featured</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Certifications</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Stay Updated</h3>
+                <p style="font-size: 0.9rem;">Get dev tips and insights delivered to your inbox.</p>
+                <form class="subscribe-wrapper" onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                © 2026 Swapan Kumar Mondal. Made with <i class="fas fa-heart" style="color: #ef4444;"></i> using Vanilla Web Tech.
+            </p>
+            <div class="social-icons">
+                <a href="https://github.com/Swapankumar2002" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                <a href="#home" class="scroll-top-btn"><i class="fas fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const GITHUB_USERNAME = 'Swapankumar2002'; 
+        
+        // ---> PASTE YOUR GOOGLE SHEETS WEB APP URL HERE <---
+        const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbyJrlXe3Hhl5V63clAkcTjJq9I1EOhj2xCyW7iKbQzsC4UwYX4zoG8tIvN74qJvdTCRfA/exec';
+
+        // 1. Scroll Reveal
+        const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    const bars = entry.target.querySelectorAll('.progress');
+                    bars.forEach(bar => bar.style.width = bar.getAttribute('data-width'));
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 2. Spotlight Hover function
+        function bindSpotlightEffect(el) {
+            el.addEventListener('mousemove', e => {
+                const rect = el.getBoundingClientRect();
+                el.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                el.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+            });
+        }
+        document.querySelectorAll('.spotlight-card').forEach(bindSpotlightEffect);
+
+        // 3. Google Sheets Data Fetcher (Updates Featured & Minor Projects)
+        async function fetchGSheetsData() {
+            const grid = document.getElementById('gsheets-grid-container');
+            
+            try {
+                if (GOOGLE_SHEETS_API_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE' || !GOOGLE_SHEETS_API_URL.startsWith('http')) {
+                    throw new Error("API URL not set.");
+                }
+
+                const response = await fetch(GOOGLE_SHEETS_API_URL, { redirect: 'follow' });
+                const json = await response.json();
+
+                if (json.status === "error" || !json.data || json.data.length === 0) throw new Error("Script error or empty data.");
+
+                // --- A) POPULATE FEATURED PROJECT (First Item in Sheet) ---
+                const fProject = json.data[0];
+                
+                document.getElementById('featured-title').textContent = fProject.name;
+                document.getElementById('featured-desc').textContent = fProject.description;
+                
+                // Status Badge Update
+                let fStatus = "pending";
+                if(fProject.status.toLowerCase().includes("complete")) fStatus = "completed";
+                else if(fProject.status.toLowerCase().includes("progress")) fStatus = "progress";
+                
+                const badge = document.getElementById('featured-badge-status');
+                badge.className = `f-badge ${fStatus}`;
+                badge.textContent = fProject.status;
+                
+                // Tags Update
+                const techContainer = document.getElementById('featured-tech');
+                techContainer.innerHTML = fProject.tags.map(tag => `<span class="f-tech-tag"><i class="fas fa-layer-group" style="color: var(--accent-purple);"></i> ${tag}</span>`).join('');
+                
+                // Buttons Update
+                document.getElementById('featured-btn-github').href = fProject.github || '#';
+                document.getElementById('featured-btn-live').href = fProject.live || '#';
+                
+                // Iframe Injection (Live Website View)
+                const graphicBox = document.getElementById('featured-graphic-container');
+                if(fProject.live && fProject.live.startsWith('http')) {
+                    graphicBox.style.padding = "0";
+                    graphicBox.style.background = "transparent";
+                    graphicBox.innerHTML = `<iframe src="${fProject.live}" style="width: 100%; height: 100%; border: none; min-height: 400px; border-radius: 20px;"></iframe>`;
+                }
+
+                // --- B) POPULATE MINOR PROJECTS (Remaining Items) ---
+                grid.innerHTML = ''; 
+                const minorProjects = json.data.slice(1);
+
+                minorProjects.forEach((project, index) => {
+                    let statusClass = "pending";
+                    if(project.status.toLowerCase().includes("complete")) statusClass = "completed";
+                    else if(project.status.toLowerCase().includes("progress")) statusClass = "progress";
+
+                    let tagsHtml = project.tags.map(tag => `<span class="minor-tag">${tag}</span>`).join('');
+
+                    let linksHtml = '';
+                    if(project.github) linksHtml += `<a href="${project.github}" target="_blank"><i class="fab fa-github"></i></a>`;
+                    if(project.live) linksHtml += `<a href="${project.live}" target="_blank"><i class="fas fa-external-link-alt"></i></a>`;
+
+                    const card = document.createElement('div');
+                    card.className = 'spotlight-card minor-project-card reveal active'; // Keep active to bypass initial scroll block
+                    card.style.transitionDelay = `${index * 0.1}s`;
+
+                    card.innerHTML = `
+                        <div class="minor-card-header">
+                            <div class="minor-tech-icons">
+                                <i class="fas fa-code-branch"></i>
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <span class="dynamic-badge ${statusClass}">${project.status}</span>
+                        </div>
+                        <h3>${project.name}</h3>
+                        <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem;">${project.description}</p>
+                        <div class="minor-tag-container">
+                            ${tagsHtml}
+                        </div>
+                        <div class="minor-card-footer">
+                            ${linksHtml}
+                        </div>
+                    `;
+
+                    bindSpotlightEffect(card);
+                    grid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.warn("Sheets Failed: ", error.message);
+                // Fallback dummy data if URL is missing
+                grid.innerHTML = `
+                    <div class="spotlight-card minor-project-card reveal active">
+                        <div class="minor-card-header">
+                            <div class="minor-tech-icons"><i class="fab fa-node-js"></i><i class="fab fa-react"></i></div>
+                            <span class="dynamic-badge completed">Completed</span>
+                        </div>
+                        <h3>Global Food Donation System</h3>
+                        <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.95rem;">A web app to address the food crisis utilizing vector search.</p>
+                        <div class="minor-tag-container">
+                            <span class="minor-tag">Node.js</span><span class="minor-tag">MongoDB</span>
+                        </div>
+                        <div class="minor-card-footer">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                `;
+                bindSpotlightEffect(grid.querySelector('.spotlight-card'));
+            }
+        }
+
+        // 4. Time Ago Helper
+        function timeAgo(dateString) {
+            const diff = Math.floor((new Date() - new Date(dateString)) / 1000);
+            if (diff < 60) return `${diff}s ago`;
+            if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+            return `${Math.floor(diff / 86400)}d ago`;
+        }
+
+        // 5. GitHub API Fetcher
+        async function fetchGitHubData() {
+            try {
+                const profileRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+                if (profileRes.ok) {
+                    const profile = await profileRes.json();
+                    document.getElementById('gh-repos-count').textContent = profile.public_repos || 0;
+                    document.getElementById('gh-followers-count').textContent = profile.followers || 0;
+                    document.getElementById('gh-following-count').textContent = profile.following || 0;
+                    document.getElementById('gh-total-gists').textContent = profile.public_gists || 0;
+                }
+
+                const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`);
+                if (reposRes.ok) {
+                    const allRepos = await reposRes.json();
+                    if (Array.isArray(allRepos)) {
+                        let stars = 0, forks = 0;
+                        const originalRepos = allRepos.filter(r => !r.fork);
+                        allRepos.forEach(r => { stars += r.stargazers_count; forks += r.forks_count; });
+                        
+                        document.getElementById('gh-total-stars').textContent = stars;
+                        document.getElementById('gh-total-forks').textContent = forks;
+
+                        const grid = document.getElementById('github-projects-grid');
+                        const loader = document.getElementById('loading-text');
+                        if (loader) loader.remove();
+                        grid.innerHTML = '';
+
+                        originalRepos.forEach(repo => {
+                            let name = repo.name.replace(/[-_]/g, ' ');
+                            let tagsHtml = repo.language ? `<span class="project-tag">${repo.language}</span>` : `<span class="project-tag">Code</span>`;
+                            const card = document.createElement('div');
+                            card.className = 'spotlight-card reveal active';
+                            card.innerHTML = `
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                    <h3 style="text-transform: capitalize; margin: 0; font-size: 1.3rem;">${name}</h3>
+                                    <i class="fab fa-github" style="color: #00f2fe; font-size: 1.5rem;"></i>
+                                </div>
+                                <p>${repo.description || 'A custom project built and maintained on GitHub.'}</p>
+                                <div class="project-tags">${tagsHtml}</div>
+                                <div class="project-links" style="margin-top: auto;">
+                                    <a href="${repo.html_url}" target="_blank">View Code <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            `;
+                            bindSpotlightEffect(card);
+                            grid.appendChild(card);
+                        });
+                    }
+                }
+
+                const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events?per_page=20`);
+                const feedContainer = document.getElementById('gh-activity-feed');
+                
+                if (eventsRes.ok) {
+                    const events = await eventsRes.json();
+                    feedContainer.innerHTML = ''; 
+                    
+                    if (Array.isArray(events)) {
+                        const pushEvents = events.filter(e => e.type === 'PushEvent').slice(0, 7);
+                        if (pushEvents.length > 0) {
+                            pushEvents.forEach(e => {
+                                const repoName = e.repo.name.split('/')[1];
+                                const count = e.payload.commits ? e.payload.commits.length : 0;
+                                const card = document.createElement('div');
+                                card.className = 'gh-event-card';
+                                card.innerHTML = `
+                                    <div class="gh-event-icon"><i class="fas fa-code-branch"></i></div>
+                                    <div class="gh-event-details">
+                                        <h4>Pushed ${count} commit${count !== 1 ? 's' : ''} to ${repoName}</h4>
+                                        <span class="gh-event-time">${timeAgo(e.created_at)}</span>
+                                    </div>
+                                `;
+                                feedContainer.appendChild(card);
+                            });
+                        } else {
+                            feedContainer.innerHTML = `<p style="color: var(--text-secondary);">No recent code pushes found.</p>`;
+                        }
+                    } else {
+                        feedContainer.innerHTML = `<p style="color: #ef4444;">Rate limit reached. Try again later.</p>`;
+                    }
+                }
+
+            } catch (error) {
+                console.error("API Error:", error);
+                document.getElementById('gh-activity-feed').innerHTML = `<p style="color: #ef4444;">Failed to load live data (API limits exceeded).</p>`;
+            }
+        }
+
+        // Initialize fetching on load
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchGSheetsData();
+            fetchGitHubData();
+        });
+    </script>
+</body>
+</html>

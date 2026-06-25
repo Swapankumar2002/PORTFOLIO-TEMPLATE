@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-white p-8">
+
+    <section class="mb-10 p-6 glass border border-cyan-500 rounded-xl">
+        <h2 class="text-2xl font-bold mb-4">Admin Control Panel</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <input id="day" placeholder="Day" class="bg-slate-800 p-2 rounded">
+            <input id="title" placeholder="Title" class="bg-slate-800 p-2 rounded">
+            <input id="type" placeholder="Type (video/image/code)" class="bg-slate-800 p-2 rounded">
+            <input id="desc" placeholder="Description" class="bg-slate-800 p-2 rounded">
+            <input id="content" placeholder="Content URL/Text" class="col-span-2 bg-slate-800 p-2 rounded">
+            <button onclick="saveData()" class="bg-cyan-600 p-2 rounded font-bold">Upload Data</button>
+        </div>
+    </section>
+
+    <div id="display" class="grid grid-cols-3 gap-6"></div>
+
+    <script>
+        function saveData() {
+            const data = {
+                day: document.getElementById('day').value,
+                title: document.getElementById('title').value,
+                type: document.getElementById('type').value,
+                desc: document.getElementById('desc').value,
+                content: document.getElementById('content').value
+            };
+            google.script.run.withSuccessHandler(() => loadView()).processAction('add', data);
+        }
+
+        function deleteRow(rowIdx) {
+            google.script.run.withSuccessHandler(() => loadView()).processAction('delete', {row: rowIdx + 1});
+        }
+
+        function loadView() {
+            google.script.run.withSuccessHandler(rows => {
+                const container = document.getElementById('display');
+                container.innerHTML = '';
+                rows.slice(1).forEach((row, index) => {
+                    container.innerHTML += `
+                        <div class="bg-slate-800 p-4 rounded-xl">
+                            <h3 class="font-bold">${row[0]} - ${row[3]}</h3>
+                            <button onclick="deleteRow(${index})" class="text-red-500 text-xs">Delete</button>
+                        </div>
+                    `;
+                });
+            }).getData();
+        }
+        loadView();
+    </script>
+</body>
+</html>
